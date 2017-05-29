@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-      <form [formGroup]="singUpForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
         <div formGroupName="userData">
           <div class="form-group">
             <label for="username">Username</label>
@@ -10,7 +10,7 @@
               id="username"
               formControlName="username"
               class="form-control">
-            <span *ngIf="!singUpForm.get('userData.username').valid && singUpForm.get('userData.username').touched"
+            <span *ngIf="!signUpForm.get('userData.username').valid && signUpForm.get('userData.username').touched"
                   class="help-block">Please enter a valid username!</span>
           </div>
           <div class="form-group">
@@ -20,7 +20,7 @@
               id="email"
               formControlName="email"
               class="form-control">
-            <span *ngIf="!singUpForm.get('userData.email').valid && singUpForm.get('userData.email').touched"
+            <span *ngIf="!signUpForm.get('userData.email').valid && signUpForm.get('userData.email').touched"
                   class="help-block">Please enter a valid email!</span>
           </div>
         </div>
@@ -32,7 +32,17 @@
               [value]="gender">{{ gender }}
           </label>
         </div>
-        <span *ngIf="!singUpForm.valid && singUpForm.touched"
+        <div formArrayName="hobbies">
+          <h4>Hobbies</h4>
+          <button class="btn btn-default" type="button"
+                  (click)="onAddHobby()">Add Hobby
+          </button>
+          <div class="form-group"
+               *ngFor="let hobbieControl of signUpForm.get('hobbies').controls; let i = index">
+            <input type="text" class="form-control" [formControlName]="i">
+          </div>
+        </div>
+        <span *ngIf="!signUpForm.valid && signUpForm.touched"
               class="help-block">Please choose gender!</span>
         <button class="btn btn-primary" type="submit">Submit</button>
       </form>
